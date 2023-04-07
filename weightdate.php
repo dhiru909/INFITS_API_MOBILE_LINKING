@@ -6,7 +6,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$userID = $_POST['userID'];
+$clientID = $_POST['clientID'];
 
 $mon = $_POST['month'];
 
@@ -17,7 +17,7 @@ $mon = $_POST['month'];
 $from = date("Y-m-d", strtotime("first day of $mon"));
 $to = date("Y-m-d", strtotime("last day of $mon"));
 
-$sql = "select date,weight from weighttracker where clientID='$userID' and date between '$from' and '$to'";
+$sql = "select date,weight from weighttracker where clientID='$clientID' and date between '$from' and '$to'";
 
 $result = mysqli_query($conn, $sql);
 

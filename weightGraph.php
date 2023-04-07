@@ -1,21 +1,19 @@
 <?php
 
-$server="localhost:3306";
-$username="root";
-$password="";
-$database = "infits";
-
-$conn=mysqli_connect($server,$username,$password,$database);
+$conn=new mysqli("www.db4free.net","infits_free_test","EH6.mqRb9QBdY.U","infits_db");
 
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
 // if ($_POST['option'] == 'Week') {
-  $from = date("Y-m-d", strtotime("first day of this month"));
-  $to = date("Y-m-d", strtotime("last day of this month"));
+  $from = date('Y-m-d', strtotime("-1 week"));
 
-$clientID = $_POST['userID'];
+  $to = date('Y-m-d');
+
+  $clientID = $_POST['userID'];
+
+  // $clientID = "Azarudeen";
 
   $sql = "select weight,date from weighttracker where clientID = '$clientID' and date between '$from' and '$to';";
 
@@ -24,9 +22,15 @@ $clientID = $_POST['userID'];
     $emparray = array();
     while($row =mysqli_fetch_assoc($result))
     {
-        $emparray['date'] = date("d",strtotime($row['date']));
         $emparray['weight'] = $row['weight'];
+        $emparray['date'] = date("d",strtotime($row['date']));
         $full[] = $emparray;
     }
     echo json_encode(['weight' => $full]);
+// }
+
+// if ($_POST['option'] == 'Month') {
+  
+// }
+
 ?>
