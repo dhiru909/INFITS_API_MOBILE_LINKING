@@ -19,17 +19,18 @@ $clientID = $_POST['clientID'];
 
 // $clientID = 'Azarudeen';
 
-// $sql = "select sum(steps),dateandtime from steptracker where clientID = '$clientID' and dateandtime between '$from' and '$to';";
-$sql = "select sum(steps),dateandtime from steptracker where clientID = '$clientID' and dateandtime between '$from' and '$to' group by dateandtime;";
+// $sql = "select sum(steps),dateandtime from steptracker where clientID = '$clientID' and date(dateandtime) between '$from' and '$to';";
+$sql = "select sum(steps), DATE(dateandtime) dates from steptracker where clientID = '$clientID' and date(dateandtime) between '$from' and '$to' group by dates order by dates desc;";
 
 $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
     $emparray = array();
     while($row =mysqli_fetch_assoc($result))
     {
-      $emparray['date'] = date("d-m-Y",strtotime($row['dateandtime']));
+      $emparray['date'] = $row['dates'];
       $emparray['steps'] = $row['sum(steps)'];
       $full[] = $emparray;
     }
     echo json_encode(['steps' => $full]);
 ?>
+//date("d-m-Y",strtotime($row['dateandtime']))

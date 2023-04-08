@@ -10,30 +10,23 @@ if ($conn->connect_error) {
 date_default_timezone_set('Asia/Kolkata');
 
 
-// steps	dateandtime	avgspeed	distance	calories	goal	clintID
-
-$userID = $_POST['userID'];
+$clientuserID = $_POST['clientuserID'];
 $steps = $_POST['steps'];
 $dateandtime = date('Y-m-d h:i:s',strtotime($_POST['dateandtime']));
 $avgspeed = $_POST['avgspeed'];
 $distance = $_POST['distance'];
 $goal = $_POST['goal'];
 $calories = $_POST['calories'];
+$clientID=$_POST['clientID'];
+$dietitian_id=$_POST['dietitian_id'];
 
-// $userID = 'dilip';
-// $steps = '3000';
-// $dateandtime = date('Y-m-d',strtotime('2022-05-29'));
-// $avgspeed = '55';
-// $distance = '10';
-// $goal = '5000';
-// $calories = '34';
 
 
  $sql = "select steps from steptracker where clientID='$userID' and dateandtime = '$dateandtime'";
 	$result = mysqli_query($conn, $sql);
 
  if(mysqli_num_rows($result) == 0){
-     $sql = "insert into steptracker values('$steps','$dateandtime','$avgspeed','$distance','$calories','$goal','$userID')";
+     $sql = "insert into steptracker (steps,dateandtime,avgspeed,distance,calories,goal,clientuserID,clientID,dietitian_id) values('$steps','$dateandtime','$avgspeed','$distance','$calories','$goal','$clientuserID','$clientID','$dietitian_id')";
  if (mysqli_query($conn,$sql)) {
      echo "New Insert 1st";
  }
