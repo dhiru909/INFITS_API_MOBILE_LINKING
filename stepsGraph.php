@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 
-$clientID = $_POST['clientuserID'];
+$clientID = $_POST['clientID'];
 
 // $clientID = 'dilip';
 
