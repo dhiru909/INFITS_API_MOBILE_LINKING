@@ -9,7 +9,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $clientuserID = $_POST['clientuserID'];
-// $clientuserID=$_POST[""];
+
 
 $sql = "select * from favourite_food_items where clientID='$clientuserID'";
 $emparray = array();
