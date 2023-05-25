@@ -1,7 +1,6 @@
 <?php 
 require "connect.php";
 
-
 $error = false;
 if (empty($_POST["userID"]) || empty($_POST["password"])) {
    // echo $_POST["userID"];
@@ -31,7 +30,7 @@ if ($error) {
     $stmt->prepare($sql);
     $stmt->bind_param("ss", $user_name,$user_pass);
     $stmt->execute();
-    $stmt->bind_result($clientuserID,$password,$name,$location,$email,$mobile,$plan,$profilePhoto,$dietitianuserID,$gender,$age,$verification,$height,$weight);
+    $stmt->bind_result($clientID,$clientuserID, $password, $name, $location, $email, $mobile, $plan, $profilePhoto,$p_p, $dietitianuserID, $gender, $age, $verification,$verification_code, $height, $weight,$last_seen);
     $result = $stmt->get_result();
     $resultArray = $result->fetch_assoc();
     
@@ -40,13 +39,14 @@ if ($error) {
   //  
       // $imageName = $_POST[''];
       $imageName = "$user_name.jpeg";
-	$image = 'upload/'.$imageName;
-	$type = pathinfo($image, PATHINFO_EXTENSION);
-      if(file_exists($image) == false) {
-        $data = file_get_contents("C:/xampp/htdocs/php/upload/$imageName");
+      $image = 'upload/'.$imageName;
+      $type = pathinfo($image, PATHINFO_EXTENSION);
+      if (file_exists($image) == false) {
+        $data = file_get_contents("C:/xampp/htdocs/infits/upload/Rahul.jpg");
       } else {
         $data = file_get_contents($image);
       }
+  
     
       //$products = array();
       $temp = array();
