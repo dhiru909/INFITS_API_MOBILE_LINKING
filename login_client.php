@@ -30,7 +30,7 @@ if ($error) {
     $stmt->prepare($sql);
     $stmt->bind_param("ss", $user_name,$user_pass);
     $stmt->execute();
-    $stmt->bind_result($clientID,$clientuserID, $password, $name, $location, $email, $mobile, $plan, $profilePhoto,$p_p, $dietitianuserID, $gender, $age, $verification,$verification_code, $height, $weight,$last_seen);
+    $stmt->bind_result($clientID,$clientuserID, $password, $name, $location, $email, $mobile, $plan, $profilePhoto,$p_p, $dietitian_id,$dietitianuserID, $gender, $age, $verification,$verification_code, $height, $weight,$last_seen);
     $result = $stmt->get_result();
     $resultArray = $result->fetch_assoc();
     
@@ -42,7 +42,7 @@ if ($error) {
       $image = 'upload/'.$imageName;
       $type = pathinfo($image, PATHINFO_EXTENSION);
       if (file_exists($image) == false) {
-        $data = file_get_contents("C:/xampp/htdocs/infits/upload/Rahul.jpg");
+        $data = file_get_contents("C:/xampp/htdocs/infits/upload/default.jpg");
       } else {
         $data = file_get_contents($image);
       }

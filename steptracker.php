@@ -35,7 +35,7 @@ $dietitian_id=$_POST['dietitian_id'];
  }
  }
  else{
-     $sql = "update steptracker set steps = '$steps',goal = '$goal' where dateandtime = '$dateandtime' and clientID = '$userID'";
+     $sql = "update steptracker set steps = '$steps',goal = '$goal' where dateandtime = '$dateandtime' and clientID = '$clientuserID'";
      if (mysqli_query($conn,$sql)) {
        echo " prevoious updated 2nd";
      }
