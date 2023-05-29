@@ -13,8 +13,8 @@ if ($conn->connect_error) {
 }
 
 $clientuserID = $_POST['clientuserID'];
-$date=$_POST['date'];
-$time=$_POST['time'];
+$dateandtime = $_POST['dateandtime'];
+echo $dateandtime;
 $goal = $_POST['goal'];
 $type = $_POST['type'];
 $amount = $_POST['amount'];

@@ -13,17 +13,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$clientID = $_POST['clientID'];
-$date=$_POST['date'];
+$clientuserID = $_POST['clientuserID'];
+$date=$_POST['dateandtime'];
 
-$sql = "select sum(drinkConsumed) x , sum(goal) y, date from watertracker where clientID='$clientID' and date='$date' group by '$date'";
+$sql = "select sum(drinkConsumed) x , sum(goal) y, dateandtime from watertracker where clientuserID='$clientuserID' and dateandtime ='$date' group by dateandtime";
 
 $result = mysqli_query($conn, $sql);
 
 $full = array();
 while ($row = mysqli_fetch_assoc($result)) {
 
-    $emparray['date'] = $row['date'];
+    $emparray['date'] = $row['dateandtime'];
     $emparray['drinkConsumed'] = $row['x'];
     $emparray['goal'] = $row['y'];
 
@@ -33,8 +33,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 // usort($full, 'date_compare');
 
 echo json_encode(['water' => $full]);
-
-?>
 
 
 
@@ -58,3 +56,7 @@ echo json_encode(['water' => $full]);
 //         echo "error";
 //     }
 // }
+
+?>
+
+

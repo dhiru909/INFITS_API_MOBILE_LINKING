@@ -12,8 +12,9 @@ $time=$_POST['time'];
 $goal = $_POST['goal'];
 $type = $_POST['type'];
 $amount = $_POST['amount'];
-$consumed = $_POST['consumed'];
-$clientID=$_POST['clientID'];
+$drinkconsumed = $_POST['drinkconsumed'];
+$clientID=$_POST['client_id'];
+$dietitianuserID=$_POST['dietitianuserID'];
 $dietitian_id=$_POST['dietitian_id'];
 
 
@@ -41,14 +42,14 @@ $dietitian_id=$_POST['dietitian_id'];
 //     }   
 // }
 
-$sql = "select drinkConsumed, goal from watertracker where clientID='$clientID' and date = '$date' and type='$type'";
+$sql = "select drinkConsumed, goal from watertracker where client_id='$client_id' and date = '$date' and type='$type'";
 
 // $liquid = 0;
 
 $result = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($result) == 0){
-$sql = "insert into watertracker(drinkConsumed,goal,date,clientuserID,time,type,amount,clientID,dietitian_id) values('$consumed','$goal','$date','$clientuserID','$time','$type','$amount','$clientID','$dietitian_id')";
+$sql = "insert into watertracker(clientID,clientuserID,dietitian_id,dietitianuserID,drinkConsumed,type,goal,amount,date,time) values($clientID,'$clientuserID','$dietitian_id','$dietitianuserID','$drinkconsumed','$type','$goal','$amount','$date','$time')";
 if (mysqli_query($conn,$sql)) {
     echo "inserted_water_goal ";
 }

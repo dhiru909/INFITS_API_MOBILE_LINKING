@@ -1,6 +1,6 @@
 <?php
 
-$conn=new mysqli("www.db4free.net","infits_free_test","EH6.mqRb9QBdY.U","infits_db");
+$conn = new mysqli("www.db4free.net", "infits_free_test", "EH6.mqRb9QBdY.U", "infits_db");
 
 
 if ($conn->connect_error) {
@@ -23,13 +23,12 @@ $clientID = $_POST['clientID'];
 $sql = "select sum(steps), DATE(dateandtime) dates from steptracker where clientuserID = '$clientID' and date(dateandtime) between '$from' and '$to' group by dates order by dates desc;";
 
 $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
-
-    $emparray = array();
-    while($row =mysqli_fetch_assoc($result))
-    {
-      $emparray['date'] = $row['dates'];
-      $emparray['steps'] = $row['sum(steps)'];
-      $full[] = $emparray;
-    }
-    echo json_encode(['steps' => $full]);
+$full = array();
+$emparray = array();
+while ($row = mysqli_fetch_assoc($result)) {
+  $emparray['date'] = $row['dates'];
+  $emparray['steps'] = $row['sum(steps)'];
+  array_push($full,$emparray);
+}
+echo json_encode(['steps' => $full]);
 ?>
