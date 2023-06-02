@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 $clientuserID = $_POST['clientuserID'];
 $date=$_POST['dateandtime'];
 
-$sql = "select sum(drinkConsumed) x , sum(goal) y, dateandtime from watertracker where clientuserID='$clientuserID' and dateandtime ='$date' group by dateandtime";
+$sql = "select sum(amount) x , sum(goal) y, dateandtime from watertracker where clientuserID='$clientuserID' and dateandtime ='$date' group by dateandtime";
 
 $result = mysqli_query($conn, $sql);
 

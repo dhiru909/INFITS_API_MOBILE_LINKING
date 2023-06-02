@@ -20,7 +20,7 @@ $clientID = $_POST['clientID'];
 // $clientID = 'Azarudeen';
 
 // $sql = "select sum(steps),dateandtime from steptracker where clientID = '$clientID' and date(dateandtime) between '$from' and '$to';";
-$sql = "select sum(steps), DATE(dateandtime) dates from steptracker where clientuserID = '$clientID' and date(dateandtime) between '$from' and '$to' group by dates order by dates desc;";
+$sql = "select sum(steps), DATE(dateandtime) dates from steptracker where clientuserID = '$clientID' and steps is not null and date(dateandtime) between '$from' and '$to' group by dates order by dates desc;";
 
 $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
 $full = array();

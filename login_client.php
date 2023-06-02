@@ -50,7 +50,9 @@ if ($error) {
     
       //$products = array();
       $temp = array();
+      $temp['client_id'] = $resultArray['client_id'];
       $temp['clientuserID']= $resultArray['clientuserID'];
+      $temp['dietitian_id'] = $resultArray['dietitian_id'];
       $temp['dietitianuserID']= $resultArray['dietitianuserID'];
       $temp['name']= $resultArray['name'];
       $temp['mobile']= $resultArray['mobile'];
@@ -64,7 +66,6 @@ if ($error) {
       $temp['verification'] = $resultArray['verification'];
       $temp['height'] = $resultArray['height'];
       $temp['weight'] = $resultArray['weight'];
-      
       array_push($products,$updt);
       array_push($products,$temp);
 
