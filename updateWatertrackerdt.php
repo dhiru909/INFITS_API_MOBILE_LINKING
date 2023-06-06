@@ -38,7 +38,7 @@ $result = mysqli_query($conn, $sql);
 // echo json_encode(['water' => $full]);
 
 if (mysqli_num_rows($result) == 0) {
-    $sql = "insert into watertrackerdt values('$consumed','$goal','$dateandtime','$userID','$type','$amount')";
+    $sql = "insert into watertrackerdt values('$consumed','$goal','$dateandtime','$clientID','$type','$amount')";
     if (mysqli_query($conn, $sql)) {
         echo "inserted";
     } else {

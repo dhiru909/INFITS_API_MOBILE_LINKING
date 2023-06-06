@@ -1,4 +1,5 @@
 <?php
+
 function date_compare($a, $b)
 {
     $t1 = $a['date'];
@@ -14,22 +15,26 @@ if ($conn->connect_error) {
 }
 
 $clientuserID = $_POST['clientuserID'];
-$date=$_POST['dateandtime'];
-
-$sql = "select sum(amount) x , sum(goal) y, dateandtime from watertracker where clientuserID='$clientuserID' and dateandtime ='$date' group by dateandtime";
+$dateandtime=$_POST['dateandtime'];
+$date = date("Y-m-d", strtotime($dateandtime));
+$sql = "select sum(amount) x from watertracker where clientuserID='$clientuserID' and date(dateandtime) like
+'%$date%' group by date(dateandtime) ";
 
 $result = mysqli_query($conn, $sql);
-
 $full = array();
 while ($row = mysqli_fetch_assoc($result)) {
 
-    $emparray['date'] = $row['dateandtime'];
-    $emparray['drinkConsumed'] = $row['x'];
-    $emparray['goal'] = $row['y'];
-
-    $full[] = $emparray;
+    $full['drinkConsumed'] = $row['x'];
+    
 }
+$sql = "select goal from watertracker where clientuserID='$clientuserID' and date(dateandtime) like '%$date%' limit 1";
 
+$result = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($result)) {
+
+    $full['goal'] = $row['goal'];
+    
+}
 // usort($full, 'date_compare');
 
 echo json_encode(['water' => $full]);
