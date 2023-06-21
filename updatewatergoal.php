@@ -35,6 +35,28 @@ if ($stmt->num_rows() > 0) {
   } else {
     echo "error";
   }
+
 }
+$sql = $conn->prepare("SELECT sum(amount) FROM watertracker WHERE clientuserID='$userID' and date(dateandtime) like '%$date%' "); 
+$sql->execute();
+$sql->store_result();    
+$sql->bind_result($water);
+$sql->fetch();
+// echo "$water";
+$full = array();
+$emparray = array();
+
+  // $emparray['water'] = $row['drinkConsumed'];
+  if($water < $goal){
+    $required = $goal - $water;
+    $sql= "delete from in_app_notifications where clientuserID = '$userID' and date(date) like '%$date%' and type = 'water';";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    $sql = "insert into in_app_notifications(clientuserID , date, text, type) values('$userID', '$dateandtime', 'water goal not completed, drink $required ml more to complete', 'water')";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    
+  }else{
+    $sql= "delete from in_app_notifications where clientuserID = '$userID' and type='water'";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+  }
 
 ?>

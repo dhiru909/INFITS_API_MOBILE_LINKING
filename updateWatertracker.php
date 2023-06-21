@@ -5,12 +5,7 @@ function date_compare($a, $b)
     $t2 = $b['date'];
     return $t2 - $t1;
 }
-$conn=new mysqli("www.db4free.net","infits_free_test","EH6.mqRb9QBdY.U","infits_db");
-
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require "connect.php";
 
 $clientuserID = $_POST['clientuserID'];
 $dateandtime = $_POST['dateandtime'];
@@ -60,3 +55,28 @@ if (mysqli_num_rows($result) == 0) {
         echo "error";
     }
 }
+$sql = "SELECT sum(amount) FROM watertracker WHERE clientuserID='$clientuserID' and date(dateandtime) like '%$date%' "; 
+
+
+$result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+// echo "$result";
+$full = array();
+$emparray = array();
+while ($row = mysqli_fetch_assoc($result)) {
+  $water = $row['sum(amount)'];
+  // $emparray['water'] = $row['drinkConsumed'];
+  if($water < $goal){
+    $required = $goal - $water;
+    $sql= "delete from in_app_notifications where clientuserID = '$clientuserID' and date(date) like '%$date%' and type = 'water';";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    $sql = "insert into in_app_notifications(clientuserID , date, text, type) values('$clientuserID', '$dateandtime', 'water goal not completed, drink $required ml more to complete', 'water')";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    
+  }else{
+    $sql= "delete from in_app_notifications where clientuserID = '$clientuserID' and type='water'";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+  }
+
+}
+
+?>

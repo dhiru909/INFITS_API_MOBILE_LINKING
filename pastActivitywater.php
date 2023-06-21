@@ -1,12 +1,5 @@
 <?php
-
-$conn = new mysqli("www.db4free.net", "infits_free_test", "EH6.mqRb9QBdY.U", "infits_db");
-
-
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+require "connect.php";
 
 
 $today = date('Y-m-d');
