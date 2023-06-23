@@ -39,5 +39,26 @@ if ($stmt->num_rows() > 0) {
     echo "error";
   }
 }
+$sql = $conn->prepare("SELECT steps FROM steptracker WHERE clientuserID='$userID' and date(dateandtime) like '%$date%' "); 
+$sql->execute();
+$sql->store_result();    
+$sql->bind_result($step);
+$sql->fetch();
+// echo "$water";
+$full = array();
+$emparray = array();
+
+  // $emparray['water'] = $row['drinkConsumed'];
+  if($step < $goal){
+    $required = $goal - $step;
+    $sql= "delete from in_app_notifications where clientuserID = '$userID' and date(date) like '%$date%' and type = 'step';";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    $sql = "insert into in_app_notifications(clientuserID , date, text, type) values('$userID', '$dateandtime', 'step goal not completed, walk $required step more to complete', 'step')";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+    
+  }else{
+    $sql= "delete from in_app_notifications where clientuserID = '$userID' and type='step'";
+    $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($connection));
+  }
 
 ?>
